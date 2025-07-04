@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VapingCation E-Sport Cup - CS2赛事</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2c3e50;
+            --accent: #1abc9c;
+            --dark: #121b26;
+            --darker: #0c131d;
+            --light: #f5f7fa;
+            --gray: #2a3a4d;
+            --success: #4caf50;
+            --danger: #e74c3c;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Oxanium', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(12, 19, 29, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-text {
+            font-family: 'Oxanium', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--accent);
+        }
+
+        nav a.active:after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(12, 19, 29, 0.85), rgba(12, 19, 29, 0.95)),
+                        url('https://img.picui.cn/free/2025/07/03/68660d05af5ad.jpg') no-repeat center center/cover;
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            text-align: center;
+            margin: 0 auto;
+            padding: 0 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(26, 188, 156, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            margin-left: 20px;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 20px;
+        }
+
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.85;
+            font-size: 1.2rem;
+            color: #b0c4de;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: #cbd5e1;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: var(--transition);
+            border: 1px solid rgba(26, 188, 156, 0.2);
+        }
+
+        .about-image:hover {
+            transform: perspective(1000px) rotateY(0);
+            box-shadow: 0 20px 50px rgba(26, 188, 156, 0.2);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Tournament Bracket */
+        .tournament-bracket {
+            background: rgba(20, 30, 48, 0.6);
+            border-radius: 15px;
+            padding: 35px;
+            overflow-x: auto;
+            border: 1px solid rgba(26, 188, 156, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .bracket-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .stage-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stage-btn {
+            background: var(--gray);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stage-btn:hover {
+            background: rgba(26, 188, 156, 0.2);
+        }
+
+        .stage-btn.active {
+            background: var(--accent);
+            color: var(--darker);
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.3);
+        }
+
+        .bracket-container {
+            min-width: 1000px;
+        }
+
+        .bracket-round {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            min-height: 500px;
+        }
+
+        .match {
+            background: rgba(30, 45, 70, 0.8);
+            border: 1px solid rgba(26, 188, 156, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            width: 320px;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .match:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
+        }
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .team:last-child {
+            border-bottom: none;
+        }
+
+        .team-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .team-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .team-score {
+            background: var(--dark);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+            background: rgba(26, 188, 156, 0.2);
+            border: 1px solid rgba(26, 188, 156, 0.3);
+        }
+
+        .winner .team-name {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .winner .team-score {
+            background: var(--accent);
+            color: var(--darker);
+        }
+
+        /* Registration Section */
+        .registration {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1723 100%);
+        }
+
+        .reg-steps {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(20, 30, 48, 0.7);
+            border-radius: 15px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(26, 188, 156, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(26, 188, 156, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .step:hover:before {
+            opacity: 1;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(26, 188, 156, 0.3);
+        }
+
+        .step-icon {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .step:hover .step-icon {
+            transform: scale(1.1);
+            color: var(--primary);
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        .step p {
+            color: #b0c4de;
+        }
+
+        .reg-form {
+            background: rgba(20, 30, 48, 0.7);
+            border-radius: 15px;
+            padding: 45px;
+            max-width: 850px;
+            margin: 0 auto;
+            border: 1px solid rgba(26, 188, 156, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(15, 25, 40, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
+        }
+
+        /* Rules Section */
+        .rules-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .rules-nav {
+            flex: 1;
+            background: rgba(20, 30, 48, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 300px;
+            border: 1px solid rgba(26, 188, 156, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .rules-nav h3 {
+            margin-bottom: 25px;
+            color: var(--accent);
+            font-size: 1.5rem;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(26, 188, 156, 0.3);
+        }
+
+        .rules-nav ul {
+            list-style: none;
+        }
+
+        .rules-nav li {
+            margin-bottom: 12px;
+        }
+
+        .rules-nav a {
+            color: #b0c4de;
+            text-decoration: none;
+            display: block;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+        .rules-nav a:hover, .rules-nav a.active {
+            background: rgba(26, 188, 156, 0.1);
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+        }
+
+        .rules-content {
+            flex: 2;
+            background: rgba(20, 30, 48, 0.7);
+            border-radius: 15px;
+            padding: 35px;
+            border: 1px solid rgba(26, 188, 156, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .rule-section {
+            margin-bottom: 45px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rule-section:last-child {
+            border-bottom: none;
+        }
+
+        .rule-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rule-section h3:before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .rule-section p {
+            margin-bottom: 15px;
+            color: #cbd5e1;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .rule-section p:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Teams Section */
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 35px;
+        }
+
+        .team-card {
+            background: rgba(20, 30, 48, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(26, 188, 156, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .team-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .team-card:hover:before {
+            opacity: 1;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(26, 188, 156, 0.3);
+        }
+
+        .team-header {
+            padding: 25px;
+            text-align: center;
+            background: rgba(15, 25, 40, 0.8);
+            border-bottom: 1px solid rgba(26, 188, 156, 0.1);
+        }
+
+        .team-logo-lg {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--gray);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.3);
+            transition: var(--transition);
+        }
+
+        .team-card:hover .team-logo-lg {
+            transform: scale(1.1);
+        }
+
+        .team-body {
+            padding: 25px;
+        }
+
+        .player-list {
+            list-style: none;
+        }
+
+        .player-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #b0c4de;
+        }
+
+        .player-list li:last-child {
+            border-bottom: none;
+        }
+
+        .player-list li i {
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(9, 15, 25, 0.98);
+            padding: 80px 0 40px;
+            border-top: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(26, 188, 156, 0.05), transparent 70%);
+            pointer-events: none;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-col h3 {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-col p {
+            color: #b0c4de;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #b0c4de;
+        }
+
+        .footer-col ul li i {
+            color: var(--accent);
+            width: 20px;
+            text-align: center;
+        }
+
+        .footer-col a {
+            color: #b0c4de;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(26, 188, 156, 0.1);
+            color: var(--accent);
+            transition: var(--transition);
+            font-size: 1.2rem;
+            border: 1px solid rgba(26, 188, 156, 0.2);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--darker);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.3);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #7f8c9d;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Form Status */
+        .form-status {
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+            background: rgba(15, 25, 40, 0.8);
+            border: 1px solid rgba(26, 188, 156, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-status i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .form-status.success {
+            background: rgba(26, 188, 156, 0.1);
+            border-color: var(--accent);
+            display: block;
+        }
+
+        .form-status.error {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: var(--danger);
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .rules-container {
+                flex-direction: column;
+            }
+
+            .rules-nav {
+                max-width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                background: var(--darker);
+                width: 70%;
+                height: 100vh;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 100px 30px 30px;
+                gap: 15px;
+                transition: var(--transition);
+                z-index: 1000;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
+
+            .hero {
+                height: 80vh;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .footer-content {
+                gap: 30px;
+            }
+
+            .reg-steps {
+                gap: 20px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container header-container">
+        <div class="logo">
+            <div class="logo-text">E-Sport Cup</div>
+        </div>
+        <button class="mobile-toggle" id="mobileToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul id="navMenu">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#bracket">赛事进度</a></li>
+                <li><a href="#teams">参赛队伍</a></li>
+                <li><a href="#rules">赛事规则</a></li>
+                <li><a href="#register">报名参赛</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>VapingCation Team</h1>
+        <h1>E-Sport Cup</h1>
+        <p>享受比赛 保持Free - 让每个人体验比赛 享受比赛</p>
+        <div class="btn-group">
+            <a href="#register" class="btn">立即报名</a>
+            <a href="#about" class="btn btn-secondary">了解更多</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+    <div class="container">
+        <div class="section-header">
+            <h2>关于主办方</h2>
+            <p>了解VapingCation团队及其举办赛事的初衷</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>VapingCation 团队</h3>
+                <p>VapingCation团队在2022成立，我们的主业是我的世界服务器，最近准备尝试CS2赛事。</p>
+                <p>如果你有兴趣可以访问：www.vapingcation.cn 去查询我们的我的世界服务器资讯。</p>
+                <p>我们希望每位普通玩家可以体验到参加赛事的激情，让每个人体验比赛 享受比赛。</p>
+                <div style="margin-top: 30px;">
+                    <a href="#register" class="btn">加入E-Sport Cup</a>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://img.picui.cn/free/2025/07/03/68661db28c0dc.png" alt="VapingCation团队">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tournament Bracket Section -->
+<section id="bracket" style="background: rgba(10, 15, 25, 0.7);">
+    <div class="container">
+        <div class="section-header">
+            <h2>赛事进度</h2>
+            <p>Major赛制 · BO3淘汰赛 · 实时更新</p>
+        </div>
+        <div class="tournament-bracket">
+            <div class="bracket-header">
+                <h3>淘汰赛阶段</h3>
+                <div class="stage-selector">
+                    <button class="stage-btn active">16强</button>
+                    <button class="stage-btn">8强</button>
+                    <button class="stage-btn">半决赛</button>
+                    <button class="stage-btn">决赛</button>
+                </div>
+            </div>
+            <div class="bracket-container">
+                <div class="bracket-round" style="display: flex; justify-content: space-between;">
+                    <!-- 16强比赛 -->
+                    <div class="match">
+                        <div class="team winner">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                        <div class="team">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                    </div>
+
+                    <div class="match">
+                        <div class="team winner">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                        <div class="team">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                    </div>
+
+                    <div class="match">
+                        <div class="team winner">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                        <div class="team">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                    </div>
+
+                    <div class="match">
+                        <div class="team winner">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                        <div class="team">
+                            <div class="team-name">
+                                <div class="team-logo">N/A</div>
+                                <span>No Team</span>
+                            </div>
+                            <div class="team-score">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Teams Section -->
+<section id="teams">
+    <div class="container">
+        <div class="section-header">
+            <h2>参赛队伍</h2>
+            <p>来自全国各地的CS2战队</p>
+        </div>
+        <div class="teams-grid">
+            <!-- Team 1 -->
+            <div class="team-card animate">
+                <div class="team-header">
+                    <div class="team-logo-lg">N/A</div>
+                    <h3>No Team</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="player-list">
+                        <li><i class="fas fa-user"></i> No Player (队长)</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team 2 -->
+            <div class="team-card animate">
+                <div class="team-header">
+                    <div class="team-logo-lg">N/A</div>
+                    <h3>No Team</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="player-list">
+                        <li><i class="fas fa-user"></i> No Player (队长)</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team 3 -->
+            <div class="team-card animate">
+                <div class="team-header">
+                    <div class="team-logo-lg">N/A</div>
+                    <h3>No Team</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="player-list">
+                        <li><i class="fas fa-user"></i> No Player (队长)</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team 4 -->
+            <div class="team-card animate">
+                <div class="team-header">
+                    <div class="team-logo-lg">N/A</div>
+                    <h3>No Team</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="player-list">
+                        <li><i class="fas fa-user"></i> No Player (队长)</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team 5 -->
+            <div class="team-card animate">
+                <div class="team-header">
+                    <div class="team-logo-lg">N/A</div>
+                    <h3>No Team</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="player-list">
+                        <li><i class="fas fa-user"></i> No Player (队长)</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team 6 -->
+            <div class="team-card animate">
+                <div class="team-header">
+                    <div class="team-logo-lg">N/A</div>
+                    <h3>No Team</h3>
+                </div>
+                <div class="team-body">
+                    <ul class="player-list">
+                        <li><i class="fas fa-user"></i> No Player (队长)</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                        <li><i class="fas fa-user"></i> No Player</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Rules Section -->
+<section id="rules" style="background: rgba(10, 15, 25, 0.7);">
+    <div class="container">
+        <div class="section-header">
+            <h2>赛事规则与制度</h2>
+            <p>Major赛事规则 · 处罚制度 · 注意事项</p>
+        </div>
+        <div class="rules-container">
+            <div class="rules-nav">
+                <h3>规则目录</h3>
+                <ul>
+                    <li><a href="#general-rules" class="active">基本规则</a></li>
+                    <li><a href="#tournament-format">赛事赛制</a></li>
+                    <li><a href="#match-rules">比赛规则</a></li>
+                    <li><a href="#penalties">处罚制度</a></li>
+                </ul>
+            </div>
+            <div class="rules-content">
+                <div class="rule-section" id="general-rules">
+                    <h3>基本规则</h3>
+                    <p>1. 所有参赛选手必须年满12周岁</p>
+                    <p>2. 每支队伍由5名正式队员和1名替补队员组成（可以不要替补队员）</p>
+                    <p>3. 比赛使用官方提供的比赛服务器，选手需提前测试连接</p>
+                    <p>4. 禁止使用任何作弊软件或利用游戏漏洞</p>
+                    <p>5. 选手需遵守比赛时间安排，迟到15分钟视为弃权</p>
+                    <p>6. 我们会有微信的官方群聊，如果队伍队长发信给[qingniao@vapingcation.cn]你们的队伍将收到一份带有微信群号和参赛资格的邮件，进入群聊需要备注自己的队伍名字，如果是队长需要标注，例如 Qingniao [VapingCation Team 队长]</p>
+                    <p>7. 如果你们队伍没有在比赛开始前或者指定时间前加入群聊，默认弃权</p>
+                    <p>8. 服务器的比赛队内语音为TS（TeamSpeak 3）由举办方提供TeamSpeak 3服务器，不允许使用其他的语音软件，如果使用其他的语音软件将视为作弊</p>
+                    <p>9. 英文游戏ID不能不得大于10个字符/字母（可以等于10个字符/字母）中文游戏ID不得大于6个汉字（不得包括6个），如果你的ID不符合要求，请使用简称，其它组合ID另外安排</p>
+                </div>
+
+                <div class="rule-section" id="tournament-format">
+                    <h3>赛事赛制</h3>
+                    <p>1. 采用Major赛事标准赛制，分为小组赛和淘汰赛两个阶段</p>
+                    <p>2. 小组赛采用BO1循环赛制，每组前两名晋级</p>
+                    <p>3. 淘汰赛采用BO3单败淘汰制</p>
+                    <p>4. 决赛采用BO5赛制</p>
+                    <p>5. 地图选择：每轮比赛前进行Ban/Pick流程</p>
+                </div>
+
+                <div class="rule-section" id="match-rules">
+                    <h3>比赛规则</h3>
+                    <p>1. 比赛采用CS2最新版本</p>
+                    <p>2. 每局比赛开始前有10分钟热身时间</p>
+                    <p>3. 技术暂停：每队每场比赛有2次技术暂停权利，每次最长5分钟</p>
+                    <p>4. 如果出现平局，将进行加时赛（MR3规则，起始资金$10,000）</p>
+                    <p>5. 比赛过程中如有争议，以裁判判罚为准</p>
+                </div>
+
+                <div class="rule-section" id="penalties">
+                    <h3>处罚制度</h3>
+                    <p>1. 迟到：每迟到5分钟扣除1个Ban位，迟到15分钟判负</p>
+                    <p>2. 不当言行：警告→扣除经济→判负→取消资格</p>
+                    <p>3. 使用禁用外设：取消当前比赛资格</p>
+                    <p>4. 代打行为：取消全队比赛资格</p>
+                    <p>5. 作弊行为：永久禁赛</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Registration Section -->
+<section class="registration" id="register">
+    <div class="container">
+        <div class="section-header">
+            <h2>赛事报名</h2>
+            <p>加入E-Sport Cup</p>
+        </div>
+
+        <div class="reg-steps">
+            <div class="step animate">
+                <div class="step-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <h3>填写报名表</h3>
+                <p>完整填写队伍和成员信息，确保信息准确无误</p>
+            </div>
+
+            <div class="step animate">
+                <div class="step-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>审核确认</h3>
+                <p>我们的团队将在48小时内审核您的报名信息</p>
+            </div>
+
+            <div class="step animate">
+                <div class="step-icon">
+                    <i class="fas fa-donate"></i>
+                </div>
+                <h3>无报名费</h3>
+                <p>无需支付，完全Free</p>
+            </div>
+
+            <div class="step animate">
+                <div class="step-icon">
+                    <i class="fas fa-flag-checkered"></i>
+                </div>
+                <h3>准备比赛</h3>
+                <p>收到确认邮件后，准备开始您的比赛征程</p>
+            </div>
+        </div>
+
+        <div class="reg-form">
+            <h3 style="text-align: center; margin-bottom: 20px; color: var(--accent);">队伍报名表</h3>
+            <h3 style="text-align: center; margin-bottom: 30px; color: var(--primary); font-weight: 500;">需要截图发送至 <span style="color: var(--accent);">qingniao@vapingcation.cn</span> 邮箱！</h3>
+
+            <!-- 表单状态信息 -->
+            <div id="formStatus" class="form-status">
+                <i class="fas fa-check-circle"></i>
+                <h3>截图提交说明</h3>
+                <p>请将填写完成的表单截图发送至 qingniao@vapingcation.cn</p>
+                <p>提交成功后，我们将在48小时内与您联系</p>
+            </div>
+
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="teamName">战队名称</label>
+                    <input type="text" id="teamName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamTag">战队缩写</label>
+                    <input type="text" id="teamTag" class="form-control" maxlength="4" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="captainName">队长姓名</label>
+                    <input type="text" id="captainName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="captainContact">队长联系方式（手机号码，QQ，微信，三选一）</label>
+                    <input type="text" id="captainContact" class="form-control" placeholder="手机号码或者QQ和微信 " required>
+                </div>
+
+                <div class="form-group">
+                    <label for="captainEmail">队长邮箱</label>
+                    <input type="email" id="captainEmail" class="form-control" placeholder="用于接收赛事信息" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="playerCount">参赛人数</label>
+                    <select id="playerCount" class="form-control" required>
+                        <option value="5">5人（无替补）</option>
+                        <option value="6">6人（1名替补）</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>是否同意赛事规则</label>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                        <input type="checkbox" id="agreeRules" required>
+                        <label for="agreeRules">我已阅读并同意《赛事规则》和《处罚制度》</label>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button type="button" id="screenshotBtn" class="btn" style="width: 100%; max-width: 300px;">
+                        <i class="fas fa-camera"></i> 提交截图至邮箱（需手动截图！）
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>E-Sport Cup</h3>
+                <p>由VapingCation团队主办的赛事，让每个人体验比赛 享受比赛。</p>
+                <div class="social-links">
+                    <a href="https://github.com/qingniaoQwQ"><i class="fab fa-github"></i></a>
+                    <a href="https://space.bilibili.com/1622211276"><i class="fab fa-bilibili"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#bracket">赛事进度</a></li>
+                    <li><a href="#teams">参赛队伍</a></li>
+                    <li><a href="#rules">赛事规则</a></li>
+                    <li><a href="#register">赛事报名</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>联系我们</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> qingniao@vapingcation.cn</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 湖南</li>
+                    <li><i class="fas fa-clock"></i> 工作日 9:00-15:00</li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>合作伙伴</h3>
+                <ul>
+                    <li>BlockPixel工作室</li>
+                    <li>Cat Team</li>
+                    <li>所有参赛队伍</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2025 VapingCation团队 保留所有权利 | E-Sport Cup CS2赛事</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    mobileToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        mobileToggle.innerHTML = navMenu.classList.contains('active') ?
+            '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+
+                // Close mobile menu if open
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
+        });
+    });
+
+    // Stage Selector
+    const stageBtns = document.querySelectorAll('.stage-btn');
+    stageBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            stageBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    // Animation on Scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.animate').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Rules Navigation
+    const rulesLinks = document.querySelectorAll('.rules-nav a');
+    rulesLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            rulesLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Screenshot Button
+    const screenshotBtn = document.getElementById('screenshotBtn');
+    const formStatus = document.getElementById('formStatus');
+
+    screenshotBtn.addEventListener('click', () => {
+        // 表单验证
+        const teamName = document.getElementById('teamName').value;
+        const captainName = document.getElementById('captainName').value;
+        const captainContact = document.getElementById('captainContact').value;
+        const captainEmail = document.getElementById('captainEmail').value;
+
+        if (!teamName || !captainName || !captainContact || !captainEmail) {
+            formStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i><h3>请填写所有必填字段</h3><p>请检查表单是否完整</p>';
+            formStatus.className = 'form-status error';
+            formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        // 显示成功消息
+        formStatus.innerHTML = '<i class="fas fa-check-circle"></i><h3>截图提交说明</h3><p>请将填写完成的表单截图发送至 qingniao@vapingcation.cn</p><p>提交成功后，我们将在48小时内与您联系</p>';
+        formStatus.className = 'form-status success';
+        formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // 模拟截图提示
+        screenshotBtn.innerHTML = '<i class="fas fa-check"></i> 截图已准备';
+        setTimeout(() => {
+            screenshotBtn.innerHTML = '<i class="fas fa-camera"></i> 生成截图';
+        }, 2000);
+    });
+
+    // Initial animations
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.querySelector('.hero-content').style.opacity = 1;
+        }, 300);
+    });
+</script>
+</body>
+</html>
